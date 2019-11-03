@@ -50,28 +50,64 @@ async function buildMetadata(sample) {
   }
 
   // needle
-  let degrees = 20, radius = .5
-  let radians = degrees * Math.PI / 180 * wfreq
-  let x = -1 * radius * Math.cos(radians) 
-  let y = radius * Math.sin(radians)
+  // let degrees = 20, radius = .5;
+  // let radians = degrees * Math.PI / 180 * wfreq;
+  // let x = -1 * radius * Math.cos(radians);
+  // let y = radius * Math.sin(radians);
 
-  let gaugeLayout = {
-    shapes: [{
-      type: 'line',
-      x0: 0,
-      y0: 0,
-      x1: x,
-      y1: y,
-      line: {
-        color: '#850000',
-        width: 3
-      }
-    }],
-    title: 'Scrubs Per Week',
-    xaxis: {visible: false, range: [-1, 1]},
-    yaxis: {visible: false, range: [-1, 1]}
-  }
+  // let gaugeLayout = {
+  //   shapes: [{
+  //     type: 'line',
+  //     x0: 0,
+  //     y0: 0,
+  //     x1: x,
+  //     y1: y,
+  //     line: {
+  //       color: '#850000',
+  //       width: 3
+  //     }
+  //   }],
+  //   title: 'Scrubs Per Week',
+  //   xaxis: {visible: false, range: [-1, 1]},
+  //   yaxis: {visible: false, range: [-1, 1]}
+  // }
 
+  // var aX = 0.025 * Math.cos((degrees) * Math.PI / 180);
+  // var aY = 0.025 * Math.sin((degrees) * Math.PI / 180);
+  // var bX = -0.025 * Math.cos((degrees) * Math.PI / 180);
+  // var bY = -0.025 * Math.sin((degrees) * Math.PI / 180);
+
+  let degrees = 180-(20 * wfreq);
+  let radius = .5;
+  var radians = degrees * Math.PI / 180;
+  var aX = 0.025 * Math.cos((radians) * Math.PI / 180);
+  var aY = 0.025 * Math.sin((radians) * Math.PI / 180);
+  var bX = -0.025 * Math.cos((radians) * Math.PI / 180);
+  var bY = -0.025 * Math.sin((radians) * Math.PI / 180);
+  var cX = radius * Math.cos(radians);
+  var cY = radius * Math.sin(radians);
+
+  var path = 'M ' + aX + ' ' + aY +
+            ' L ' + bX + ' ' + bY +
+            ' L ' + cX + ' ' + cY +
+            ' Z';
+
+  var gaugeLayout = {
+    shapes:[{
+        type: 'path',
+        path: path,
+        fillcolor: '#850000',
+        line: {
+          color: '#850000'
+        }
+      }],
+    xaxis: {zeroline:false, showticklabels:false,
+               showgrid: false, range: [-1, 1]},
+    yaxis: {zeroline:false, showticklabels:false,
+               showgrid: false, range: [-1, 1]}
+  };
+
+  // the dot where the needle "originates"
   let dot = {
     type: 'scatter',
     x:[0],
