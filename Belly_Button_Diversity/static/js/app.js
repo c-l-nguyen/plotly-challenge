@@ -21,6 +21,58 @@ async function buildMetadata(sample) {
 
   // BONUS: Build the Gauge Chart
   // buildGauge(data.WFREQ);
+  let wfreq = data.WFREQ;
+
+  let gauge_data = {
+    domain: { x: [0, 1], y: [0, 1] },
+    gauge: { axis: { range: [null, 9] } },
+		value: wfreq,
+    title: { text: "Scrubs Per Week" },
+		type: "indicator",
+		mode: "gauge+number"
+  }
+
+  let traceGauge = {
+    type: 'pie',
+    showlegend: false,
+    hole: 0.4,
+    rotation: 90,
+    values: [ 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180/9, 180],
+    text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+    direction: 'clockwise',
+    textinfo: 'text',
+    textposition: 'inside',
+    marker: {
+      colors: ['#F8F3EC','#F4F1E5','#E9E6CA','#E2E4B1','#D5E49D','#B7CC92','#8CBF88','#8ABB8F','#85B48A','white'],
+      labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9']
+    }
+  }
+
+  // needle
+  let degrees = 50, radius = .9
+  let radians = degrees * Math.PI / 180
+  let x = -1 * radius * Math.cos(radians) * wfreq
+  let y = radius * Math.sin(radians)
+
+  let gaugeLayout = {
+    shapes: [{
+      type: 'line',
+      x0: 0.5,
+      y0: 0.5,
+      x1: 0.6,
+      y1: 0.6,
+      line: {
+        color: 'black',
+        width: 3
+      }
+    }],
+    title: 'Scrubs Per Week',
+    xaxis: {visible: false, range: [-1, 1]},
+    yaxis: {visible: false, range: [-1, 1]}
+  }
+
+  // Plotly.newPlot("gauge", [gauge_data]);
+  Plotly.newPlot("gauge", [traceGauge], gaugeLayout);
 }
 
 async function buildCharts(sample) {
@@ -62,7 +114,7 @@ async function buildCharts(sample) {
 
 function init() {
   // Grab a reference to the dropdown select element
-  var selector = d3.select("#selDataset");
+  let selector = d3.select("#selDataset");
 
   // Use the list of sample names to populate the select options
   d3.json("/names").then((sampleNames) => {
