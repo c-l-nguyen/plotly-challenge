@@ -44,25 +44,26 @@ async function buildMetadata(sample) {
     textposition: 'inside',
     marker: {
       colors: ['#F8F3EC','#F4F1E5','#E9E6CA','#E2E4B1','#D5E49D','#B7CC92','#8CBF88','#8ABB8F','#85B48A','white'],
-      labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9']
+      labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9',''],
+      hoverinfo: "label"
     }
   }
 
   // needle
-  let degrees = 50, radius = .9
-  let radians = degrees * Math.PI / 180
-  let x = -1 * radius * Math.cos(radians) * wfreq
+  let degrees = 20, radius = .5
+  let radians = degrees * Math.PI / 180 * wfreq
+  let x = -1 * radius * Math.cos(radians) 
   let y = radius * Math.sin(radians)
 
   let gaugeLayout = {
     shapes: [{
       type: 'line',
-      x0: 0.5,
-      y0: 0.5,
-      x1: 0.6,
-      y1: 0.6,
+      x0: 0,
+      y0: 0,
+      x1: x,
+      y1: y,
       line: {
-        color: 'black',
+        color: '#850000',
         width: 3
       }
     }],
@@ -71,8 +72,19 @@ async function buildMetadata(sample) {
     yaxis: {visible: false, range: [-1, 1]}
   }
 
+  let dot = {
+    type: 'scatter',
+    x:[0],
+    y:[0],
+    marker: {
+      size: 14,
+      color:'#850000'
+    },
+    showlegend: false
+}
+
   // Plotly.newPlot("gauge", [gauge_data]);
-  Plotly.newPlot("gauge", [traceGauge], gaugeLayout);
+  Plotly.newPlot("gauge", [traceGauge, dot], gaugeLayout);
 }
 
 async function buildCharts(sample) {
