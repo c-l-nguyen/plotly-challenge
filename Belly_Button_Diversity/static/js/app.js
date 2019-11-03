@@ -1,16 +1,5 @@
 function buildGauge(wfreq){
 
-  // original gauge plot which I think is easier to read
-  // let gauge_data = {
-  //   domain: { x: [0, 1], y: [0, 1] },
-  //   gauge: { axis: { range: [null, 9] } },
-	// 	value: wfreq,
-  //   title: { text: "Scrubs Per Week" },
-	// 	type: "indicator",
-	// 	mode: "gauge+number"
-  // }
-  // Plotly.newPlot("gauge", [gauge_data]);
-
   // pie chart converted to gauge chart
   let traceGauge = {
     type: 'pie',
@@ -41,32 +30,7 @@ function buildGauge(wfreq){
     showlegend: false
   }
 
-  // the needle
-
-  // simple needle version
-  // let degrees = 20, radius = .5;
-  // let radians = degrees * Math.PI / 180 * wfreq;
-  // let x = -1 * radius * Math.cos(radians);
-  // let y = radius * Math.sin(radians);
-
-  // let gaugeLayout = {
-  //   shapes: [{
-  //     type: 'line',
-  //     x0: 0,
-  //     y0: 0,
-  //     x1: x,
-  //     y1: y,
-  //     line: {
-  //       color: '#850000',
-  //       width: 3
-  //     }
-  //   }],
-  //   title: 'Scrubs Per Week',
-  //   xaxis: {visible: false, range: [-1, 1]},
-  //   yaxis: {visible: false, range: [-1, 1]}
-  // }
-
-  // triangular needle version
+  // the needle (triangular version)
   let degrees = 180-(20 * wfreq);
   let radius = .5;
   let radians = degrees * Math.PI / 180;
@@ -113,12 +77,7 @@ async function buildMetadata(sample) {
   panel.html("");
 
   // Use `Object.entries` to add each key and value pair to the panel
-  // Hint: Inside the loop, you will need to use d3 to append new
-  // tags for each key-value in the metadata.
   let data_pairs = Object.entries(data);
-  // panel.append("text").text("a")
-  // data_pairs.forEach(pair => console.log(pair[0] + ": " + pair[1]))
-  // data_pairs.forEach(pair => panel.append(`$pair[0]: $pair[1]`));
   data_pairs.forEach(pair => panel.append("text").text(pair[0] + ": " + pair[1] + "\n").append("br"));
 
   // BONUS: Build the Gauge Chart
