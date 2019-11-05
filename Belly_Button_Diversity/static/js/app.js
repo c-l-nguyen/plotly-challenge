@@ -15,7 +15,8 @@ function buildGauge(wfreq){
       colors: ['#F8F3EC','#F4F1E5','#E9E6CA','#E2E4B1','#D5E49D','#B7CC92','#8CBF88','#8ABB8F','#85B48A','white'],
       labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9',''],
       hoverinfo: "label"
-    }
+    },
+    hoverinfo: "skip"
   }
 
   // the dot where the needle "originates"
@@ -27,7 +28,8 @@ function buildGauge(wfreq){
       size: 14,
       color:'#850000'
     },
-    showlegend: false
+    showlegend: false,
+    hoverinfo: "skip"
   }
 
   // the needle (triangular version)
@@ -47,6 +49,7 @@ function buildGauge(wfreq){
             ' Z';
 
   let gaugeLayout = {
+    title: "<b>Belly Button Washing Frequency</b><br>Scrubs per Week",
     shapes:[{
         type: 'path',
         path: path,
@@ -104,21 +107,35 @@ async function buildCharts(sample) {
     hovertext: otu_labels.slice(0,10)
   }
 
-  Plotly.newPlot("pie", [pie_data]);
+  let pie_layout = {
+    title: "Top 10 OTU_ID Counts"
+  }
+
+  Plotly.newPlot("pie", [pie_data], pie_layout);
   
   // Build a Bubble Chart using the sample data
   let bubble_data = {
+    type:"scatter",
     x: otu_ids,
     y: sample_values,
     mode: 'markers',
     marker: {
               color: otu_ids, 
-              size: sample_values
+              size: sample_values.map(d => d/1.2)
             },
-    text: otu_labels
+    hovertext: otu_labels
   }
 
-  Plotly.newPlot("bubble", [bubble_data]);
+  let bubble_layout = {
+    title: "OTU_IDs in Sample",
+    xaxis: {
+      title: {
+        text: 'OTU ID',
+      }
+    }
+  };
+
+  Plotly.newPlot("bubble", [bubble_data], bubble_layout);
 
 }
 
