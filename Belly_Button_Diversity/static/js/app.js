@@ -38,13 +38,13 @@ function buildGauge(wfreq){
   let weight = 0;
   if (wfreq == 2 || wfreq == 3){
     weight = 3;
-  }else if (wfreq == 4){
+  } else if (wfreq == 4){
     weight = 1;
-  }else if (wfreq == 5){
+  } else if (wfreq == 5){
     weight = -.5;
-  }else if (wfreq == 6){
+  } else if (wfreq == 6){
     weight = -2;
-  }else if (wfreq == 7){
+  } else if (wfreq == 7){
     weight = -3;
   }
 
