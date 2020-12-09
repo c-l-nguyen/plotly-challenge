@@ -6,6 +6,8 @@ The following plots are included in the dashboard using the Plotly.js framwork:
 * A bubble chart to see OTU_IDs vs. the sample value with the size of the bubble determined by the sample value
 * A gauge chart to show the amount of belly button scrubs per week for the participant sample
 
+![webpage](Belly_Button_Diversity/static/img/webpage.png)
+
 ## Sources for creating gauge chart
 * https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
 * https://code.tutsplus.com/tutorials/create-interactive-charts-using-plotlyjs-pie-and-gauge-charts--cms-29216
